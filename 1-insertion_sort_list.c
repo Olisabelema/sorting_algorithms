@@ -1,14 +1,10 @@
 #include "sort.h"
 
 /**
- * insertion_sort_list - Perform insertion sort on a doubly linked list
- * @list: Double pointer to the head of the list
+ * insertion_sort_list - insertion sort on doubly linked list
+ * @list: double pointer to list head
  *
- * Description: This function sorts a doubly linked list in ascending order
- * using the insertion sort algorithm. It takes a double pointer to the head
- * of the list and rearranges the nodes in place.
- *
- * Return: Void
+ * Return: void
  */
 void insertion_sort_list(listint_t **list)
 {
@@ -16,46 +12,36 @@ void insertion_sort_list(listint_t **list)
 
 	if (list == NULL || (*list) == NULL || (*list)->next == NULL)
 		return;
-
 	current = (*list)->next;
 
 	while (current)
 	{
 		while (current->prev && current->n < current->prev->n)
 		{
-			/* Create a temporary node to hold the current node */
+			/* temp node to hold current */
 			listint_t *temp = current;
-
-			/* Adjust adjacent links to the current node */
+			/* adjust adjacent links to current */
 			if (temp->next)
 				temp->next->prev = current->prev;
 			temp->prev->next = current->next;
-
-			/* Move the current node to the previous position */
+			/* change current to previous node */
 			current = current->prev;
-
-			/* Adjust the temporary node to point to the previous current node */
+			/*adjust temp node to point to previous current */
 			temp->next = current;
 			temp->prev = temp->prev->prev;
-
-			/* Point the previous current node back to the temporary node */
+			/* point back current, which is now move behind to temp */
 			current->prev = temp;
-
-			/* Adjust the previous node's next link to point to the temporary node */
+			/* adjust temp prev */
 			if (temp->prev)
 				temp->prev->next = temp;
-
-			/* Update the head node if the temporary node is now the head */
+			/* adjust head node */
 			if (temp->prev == NULL)
 				(*list) = temp;
-
-			/* Print the list after each swap */
+			/* print list */
 			print_list(*list);
-
-			/* Move back in the list */
+			/* move back list */
 			current = current->prev;
 		}
-
 		current = current->next;
 	}
 }
