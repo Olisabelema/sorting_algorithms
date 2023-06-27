@@ -1,7 +1,8 @@
 #include "sort.h"
 
 /**
- * insertion_sort_list - insertion sort on doubly linked list
+ * insertion_sort_list - Sorts a doubly linked list using
+ * the insertion sort algorithm.
  * @list: double pointer to list head
  *
  * Return: void
@@ -18,28 +19,28 @@ void insertion_sort_list(listint_t **list)
 	{
 		while (current->prev && current->n < current->prev->n)
 		{
-			/* temp node to hold current */
+			/* temp node to hold current element */
 			listint_t *temp = current;
-			/* adjust adjacent links to current */
+			/* Update links of adjacent nodes to current node */
 			if (temp->next)
 				temp->next->prev = current->prev;
 			temp->prev->next = current->next;
-			/* change current to previous node */
+			/* Assign previous node to current node */
 			current = current->prev;
-			/*adjust temp node to point to previous current */
+			/*Update links of temp node to refer to previous current node*/
 			temp->next = current;
 			temp->prev = temp->prev->prev;
-			/* point back current, which is now move behind to temp */
+			/* Move current pointer backward to temp node */
 			current->prev = temp;
-			/* adjust temp prev */
+			/*  Adjust prev pointer of temp node */
 			if (temp->prev)
 				temp->prev->next = temp;
-			/* adjust head node */
+			/* Adjust head node */
 			if (temp->prev == NULL)
 				(*list) = temp;
-			/* print list */
+			/* Print list */
 			print_list(*list);
-			/* move back list */
+			/* Move back list */
 			current = current->prev;
 		}
 		current = current->next;
