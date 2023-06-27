@@ -1,85 +1,76 @@
 #include "sort.h"
-void merge(int *leftArr, int leftSize, int *rightArr,
-		   int rightSize, int *array);
+
 /**
- * merge_sort - merge sort algorithm
- * @array: array to sort
- * @size: size of array
+ * swap - swaps 2 int values
+ * @array: the integer array to sort
+ * @size: the size of the array
+ * @a: address of first value
+ * @b: address of second value
  *
  * Return: void
  */
-void merge_sort(int *array, size_t size)
+void swap(int *array, size_t size, int *a, int *b)
 {
-
-	size_t mid = size / 2;
-	size_t i = 0;
-	int leftSize = mid;
-	int rightSize = size - mid;
-	int leftArr[4096];
-	int rightArr[4096];
-
-	if (size < 2)
-		return;
-
-	for (i = 0; i < mid; i++)
+	if (*a != *b)
 	{
-		leftArr[i] = array[i];
+		*a = *a + *b;
+		*b = *a - *b;
+		*a = *a - *b;
+		print_array((const int *)array, size);
 	}
-	for (i = mid; i < size; i++)
-	{
-		rightArr[i - mid] = array[i];
-	}
-
-	merge_sort(leftArr, leftSize);
-	merge_sort(rightArr, rightSize);
-	printf("Merging...\n");
-	printf("[left]: ");
-	print_array(leftArr, leftSize);
-	printf("[right]: ");
-	print_array(rightArr, rightSize);
-	merge(leftArr, leftSize, rightArr, rightSize, array);
-	printf("[Done]: ");
-	print_array(array, size);
 }
 
 /**
- * merge - merge function in merge_sort
- * @leftArr: left array
- * @leftSize: size of left array
- * @rightArr: right array
- * @rightSize: size of right array
- * @array: array to merge in place
+ * lomuto_partition - partitions the array
+ * @array: the integer array to sort
+ * @size: the size of the array
+ * @lo: the low index of the sort range
+ * @hi: the high index of the sort range
+ *
+ * Return: void
  */
-void merge(int *leftArr, int leftSize, int *rightArr,
-		   int rightSize, int *array)
+size_t lomuto_partition(int *array, size_t size, ssize_t lo, ssize_t hi)
 {
-	int i = 0, j = 0, k = 0;
+	int i, j, pivot = array[hi];
 
-	while (i < leftSize && j < rightSize)
+	for (i = j = lo; j < hi; j++)
+		if (array[j] < pivot)
+			swap(array, size, &array[j], &array[i++]);
+	swap(array, size, &array[i], &array[hi]);
+
+	return (i);
+}
+
+/**
+ * quicksort - quicksorts via Lomuto partitioning scheme
+ * @array: the integer array to sort
+ * @size: the size of the array
+ * @lo: the low index of the sort range
+ * @hi: the high index of the sort range
+ *
+ * Return: void
+ */
+void quicksort(int *array, size_t size, ssize_t lo, ssize_t hi)
+{
+	if (lo < hi)
 	{
-		if (leftArr[i] <= rightArr[j])
-		{
-			array[k] = leftArr[i];
-			i++;
-			k++;
-		}
-		else
-		{
-			array[k] = rightArr[j];
-			k++;
-			j++;
-		}
+		size_t p = lomuto_partition(array, size, lo, hi);
+
+		quicksort(array, size, lo, p - 1);
+		quicksort(array, size, p + 1, hi);
 	}
-	while (i < leftSize)
-	{
-		array[k] = leftArr[i];
-		k++;
-		i++;
-	}
-	while (j < rightSize)
-	{
-		array[k] = rightArr[j];
-		k++;
-		j++;
-	}
+}
+
+/**
+ * quick_sort - calls quicksort
+ * @array: the integer array to sort
+ * @size: the size of the array
+ *
+ * Return: void
+ */
+void quick_sort(int *array, size_t size)
+{
+	if (!array || !size)
+		return;
+	quicksort(array, size, 0, size - 1);
 }
