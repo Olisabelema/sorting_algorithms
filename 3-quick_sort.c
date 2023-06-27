@@ -4,12 +4,12 @@ void my_quick_sort(int *array, int start, int end, int whole_size);
 
 /**
  * partition - lomuto partition scheme
- * @array: array to sort
- * @start: start of array
- * @end: end of array
+ * for sorting an array.
+ * @array: array to be sorted
+ * @start: starting index of the array
+ * @end: ending index of the array
  * @whole_size: size of whole array
- *
- * Return: pivot location
+ * Return: location of the pivot
  */
 int partition(int *array, int start, int end, int whole_size)
 {
@@ -43,10 +43,10 @@ int partition(int *array, int start, int end, int whole_size)
 }
 
 /**
- * quick_sort - quick_sort skeleton
- * @array: array
- * @size: size of array
- *
+ * quick_sort - Quick sort algorithm to
+ * sort an array in ascending order.
+ * @array: array to be sorted
+ * @size: size of the array
  * Return: void
  */
 void quick_sort(int *array, size_t size)
@@ -61,12 +61,12 @@ void quick_sort(int *array, size_t size)
 }
 
 /**
- * my_quick_sort - quick sort implementation
- * @array: array
- * @start: start of array
- * @end: end of array
- * @whole_size: size of array
- *
+ * my_quick_sort - Implementation of the 
+ * Quick sort algorithm to sort an array.
+ * @array: array to be sorted
+ * @start: start index of the array
+ * @end: end index of the array
+ * @whole_size: size of the entire array
  * Return: void
  */
 void my_quick_sort(int *array, int start, int end, int whole_size)
